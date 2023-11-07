@@ -1,74 +1,66 @@
 from SolveFunctions import *
 
-yukaridanAsagiya = []
-soldanSaga = []
+up_to_down = []
+left_to_right = []
 
-config.PUZZLESIZE = int(input("Puzzle Boyutunu girin : "))
+config.PUZZLESIZE = int(input("Enter Puzzle Size : ")) # "Puzzle Boyutunu girin"
 
 PUZZLE = [[' '] * config.PUZZLESIZE for _ in range(config.PUZZLESIZE)]
 
-print("Yukaridan asagiya dogru doldurma degerlerini girin. (EX: 2,1,2) ")
+print("Enter rows from up to down (EX: 2,1,2) ") # "Yukaridan asagiya dogru doldurma degerlerini girin."
 
 for i in range(config.PUZZLESIZE):
-    girdi = input(f"{i+1}. satiri girin : ")
+    input_val = input(f"{i+1}. row : ")
     
-    girdi_listesi = [int(x) for x in girdi.split(",")]
+    input_list = [int(x) for x in input_val.split(",")]
     
     # Girdi listesini ana liste içine ekle
-    yukaridanAsagiya.append(girdi_listesi)
+    up_to_down.append(input_list)
 
-print("Soldan saga dogru doldurma degerlerini girin. (EX: 2,1,2) ")
+print("Enter columns from left to right. (EX: 2,1,2) ")
 
 for i in range(config.PUZZLESIZE):
-    girdi = input(f"{i+1}. sutunu girin : ")
+    input_val = input(f"{i+1}. column : ")
     
-    girdi_listesi = [int(x) for x in girdi.split(",")]
+    input_list = [int(x) for x in input_val.split(",")]
     
     # Girdi listesini ana liste içine ekle
-    soldanSaga.append(girdi_listesi)
+    left_to_right.append(input_list)
 
 
 possibilitiesList = []
 
 while (not isFinished(PUZZLE)):
-    for i in range(len(yukaridanAsagiya)):
+    for i in range(len(up_to_down)):
 
-        slot = [None] * (len(yukaridanAsagiya[i]) + 1)
+        slot = [None] * (len(up_to_down[i]) + 1)
         empty = 0
-        for j in yukaridanAsagiya[i]:
+        for j in up_to_down[i]:
             empty += j
-        empty += len(yukaridanAsagiya[i]) - 1
+        empty += len(up_to_down[i]) - 1
         empty = config.PUZZLESIZE - empty
 
         calculatePossibleEmptySlots(slot,empty, 0, possibilitiesList)
         
-        possibleSeries = calculatePossibleSeries(possibilitiesList, yukaridanAsagiya[i], PUZZLE[i])
+        possibleSeries = calculatePossibleSeries(possibilitiesList, up_to_down[i], PUZZLE[i])
 
         PUZZLE[i] = finalSerie(possibleSeries)
 
         possibilitiesList.clear()
         possibleSeries.clear()
 
-        #input()
-        #print("Yatay:" , i+1)
-        #printPuzzle(PUZZLE)
-    
+    for i in range(len(left_to_right)):
 
-    #print("----------------------\n\n")
-
-
-    for i in range(len(soldanSaga)):
-
-        slot = [None] * (len(soldanSaga[i]) + 1)
+        slot = [None] * (len(left_to_right[i]) + 1)
         empty = 0
-        for j in soldanSaga[i]:
+        for j in left_to_right[i]:
             empty += j
-        empty += len(soldanSaga[i]) - 1
+        empty += len(left_to_right[i]) - 1
         empty = config.PUZZLESIZE - empty
 
         calculatePossibleEmptySlots(slot,empty, 0, possibilitiesList)
 
-        possibleSeries = calculatePossibleSeries(possibilitiesList, soldanSaga[i], pickColumn(PUZZLE,i))
+        possibleSeries = calculatePossibleSeries(possibilitiesList, left_to_right[i], pickColumn(PUZZLE,i))
 
         fin = finalSerie(possibleSeries)
 
@@ -76,10 +68,6 @@ while (not isFinished(PUZZLE)):
             PUZZLE[j][i] = fin[j]
 
         possibilitiesList.clear()
-
-        #input()
-        #print("Dikey:" , i+1)
-        #printPuzzle(PUZZLE)
 
 
 print("\n\n\n\t" ,end="")
@@ -91,4 +79,4 @@ for i in range(config.PUZZLESIZE - 2):
 print()
 printPuzzle(PUZZLE)
 
-input("\nKapatmak icin bir tusa basin.")
+input("\nPress any key to exit.")

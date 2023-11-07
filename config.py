@@ -1,1 +1,1 @@
-PUZZLESIZE = 5
+PUZZLESIZE = 5  # puzzle size by default

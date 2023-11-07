@@ -12,9 +12,11 @@ def isFinished(puzzle):
                 return False
     return True
 
+
 def printLists(list):
     for i in list:
         print(i, end=" ")
+
 
 def printPuzzle(puzzle):
     for i in range(config.PUZZLESIZE):
@@ -26,6 +28,7 @@ def printPuzzle(puzzle):
         for k in range(config.PUZZLESIZE):
             print("--", end="")
         print()
+
 
 def calculatePossibleEmptySlots(slot, empty, index, possibilitiesList):
     if index == len(slot):
@@ -44,7 +47,6 @@ def calculatePossibleSeries(possibilitiesList, lineValues,serie):
     for i in range( len(possibilitiesList) ):
         tempList = []
 
-
         for j in range( len(lineValues) ):
             for k in range (possibilitiesList[i][j]):
                 tempList.append(CROSS)
@@ -59,12 +61,13 @@ def calculatePossibleSeries(possibilitiesList, lineValues,serie):
             possibleSeries.append(tempList)
     return possibleSeries
 
+
 def pickColumn(arr,columnnumber):
     column = [satir[columnnumber] for satir in arr]
     return column
 
+
 def isFit(serie, controlSerie):
-    
     for i in range(config.PUZZLESIZE):
         if((serie[i] == FILLED and controlSerie[i] == CROSS) or (serie[i] == CROSS and controlSerie[i] == FILLED) ):
             return False
