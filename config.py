@@ -1,0 +1,1 @@
+PUZZLESIZE = 5
